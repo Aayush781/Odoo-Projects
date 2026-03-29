@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Asset Type List View -->
+    <record id="asset_type_view_list" model="ir.ui.view">
+        <field name="name">asset.type.list</field>
+        <field name="model">asset.type</field>
+        <field name="arch" type="xml">
+            <list string="Asset Types">
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Asset Type Form View -->
+    <record id="asset_type_view_form" model="ir.ui.view">
+        <field name="name">asset.type.form</field>
+        <field name="model">asset.type</field>
+        <field name="arch" type="xml">
+            <form string="Asset Type">
+                <sheet>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Asset Type Kanban View -->
+    <record id="asset_type_view_kanban" model="ir.ui.view">
+        <field name="name">asset.type.kanban</field>
+        <field name="model">asset.type</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <field name="description"/>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Asset Type Action -->
+    <record id="asset_type_action" model="ir.actions.act_window">
+        <field name="name">Asset Types</field>
+        <field name="res_model">asset.type</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new asset type
+            </p>
+        </field>
+    </record>
+
+    <!-- Asset Type Menu - sequence 1 to appear above Asset Categories (sequence 2) -->
+    <menuitem
+        id="menu_asset_type"
+        name="Asset Types"
+        parent="maintenance.menu_maintenance_configuration"
+        action="asset_type_action"
+        sequence="1"
+    />
+
+</odoo>

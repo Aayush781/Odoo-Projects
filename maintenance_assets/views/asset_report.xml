@@ -1,0 +1,52 @@
+<odoo>
+    <record id="view_asset_report_analysis_graph" model="ir.ui.view">
+        <field name="name">asset.report.analysis.graph</field>
+        <field name="model">asset.report.analysis</field>
+        <field name="arch" type="xml">
+            <graph string="Asset Analysis" type="bar" stacked="True" sample="1">
+                <field name="asset_type_id" type="row"/>
+                <field name="category_id" type="row"/>
+                <field name="asset_count" type="measure"/>
+                <field name="cost" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_asset_report_analysis_pivot" model="ir.ui.view">
+        <field name="name">asset.report.analysis.pivot</field>
+        <field name="model">asset.report.analysis</field>
+        <field name="arch" type="xml">
+            <pivot string="Asset Stats" sample="1">
+                <field name="asset_type_id" type="row"/>
+                <field name="category_id" type="col"/>
+                <field name="asset_count" type="measure"/>
+                <field name="cost" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_asset_report_analysis_search" model="ir.ui.view">
+        <field name="name">asset.report.analysis.search</field>
+        <field name="model">asset.report.analysis</field>
+        <field name="arch" type="xml">
+            <search string="Asset Search">
+                <field name="asset_name"/>
+                <field name="asset_type_id"/>
+                <field name="category_id"/>
+                <field name="purchase_date"/>
+                <filter string="Asset Type" name="group_by_asset_type" context="{'group_by':'asset_type_id'}"/>
+                <filter string="Category" name="group_by_category" context="{'group_by':'category_id'}"/>
+                <filter string="Purchase Month" name="month" context="{'group_by':'purchase_date:month'}"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_asset_report_analysis" model="ir.actions.act_window">
+        <field name="name">Asset Analysis</field>
+        <field name="res_model">asset.report.analysis</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="context">{
+            'graph_measure': 'asset_count',
+            'pivot_measures': ['asset_count'],
+            'search_default_group_by_asset_type': 1
+        }</field>
+    </record>
+    <menuitem id="menu_asset_report_analysis" name="Asset Analysis" action="action_asset_report_analysis" parent="maintenance.maintenance_reporting" sequence="10" groups="base.group_user"/>
+</odoo>

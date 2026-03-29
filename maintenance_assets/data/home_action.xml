@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Set default home action for admin user -->
+    <record id="base.user_admin" model="res.users">
+        <field name="action_id" ref="maintenance.hr_equipment_action"/>
+    </record>
+</odoo>

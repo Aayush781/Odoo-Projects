@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <record id="maintenance.menu_m_dashboard" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+        <record id="maintenance_company_dashboard_view_kanban" model="ir.ui.view">
+            <field name="name">maintenance.company.dashboard.view.kanban</field>
+            <field name="model">maintenance.company.dashboard</field>
+            <field name="arch" type="xml">
+                <kanban create="false">
+                    <field name="asset_type_name"/>
+                    <field name="asset_type_id"/>
+                    <field name="equipment_count"/>
+                    <templates>
+                        <t t-name="card">
+                            <div style="width: 260px; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 28px rgba(113,75,103,0.18); margin: 14px;">
+                                <!-- Card Header with gradient -->
+                                <div style="background: linear-gradient(145deg, #714B67 0%, #3d1f3d 100%); padding: 30px 20px 22px; text-align: center; position: relative;">
+                                    <div style="width: 56px; height: 56px; background: rgba(255,255,255,0.15); border-radius: 50%; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fa fa-cubes" style="font-size: 26px; color: white;"/>
+                                    </div>
+                                    <div style="color: white; font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.4; word-break: break-word;">
+                                        <field name="asset_type_name"/>
+                                    </div>
+                                </div>
+                                <!-- Stats strip -->
+                                <div style="background: rgba(113,75,103,0.07); padding: 12px 20px; display: flex; align-items: center; justify-content: center; gap: 6px; border-bottom: 1px solid rgba(113,75,103,0.1);">
+                                    <i class="fa fa-archive" style="color: #714B67; font-size: 13px;"/>
+                                    <span style="font-size: 22px; font-weight: 800; color: #714B67;">
+                                        <field name="equipment_count"/>
+                                    </span>
+                                    <span style="font-size: 11px; color: #9b7a96; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 4px;">Assets</span>
+                                </div>
+                                <!-- Footer / Button -->
+                                <div style="background: white; padding: 16px 20px; text-align: center;">
+                                    <button type="object" name="action_view_categories"
+                                        style="background: linear-gradient(135deg, #714B67, #3d1f3d); color: white; border: none; border-radius: 10px; padding: 10px 0; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                        <i class="fa fa-th-list" style="font-size: 13px;"/> View Categories
+                                    </button>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="action_maintenance_company_dashboard" model="ir.actions.act_window">
+            <field name="name">Asset Types</field>
+            <field name="res_model">maintenance.company.dashboard</field>
+            <field name="view_mode">kanban</field>
+        </record>
+        <menuitem id="menu_maintenance_company_dashboard_root"
+                  name="Dashboard"
+                  action="action_maintenance_company_dashboard"
+                  parent="maintenance.menu_maintenance_title"
+                  sequence="0"/>
+    </data>
+</odoo>

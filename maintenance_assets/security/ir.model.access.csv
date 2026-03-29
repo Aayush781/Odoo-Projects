@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_asset_type_user,asset.type.user,model_asset_type,base.group_user,1,1,1,1
+access_maintenance_company_dashboard,maintenance.company.dashboard,model_maintenance_company_dashboard,base.group_user,1,0,0,0
+access_asset_report_all,asset.report.analysis,model_asset_report_analysis,base.group_user,1,0,0,0
+access_maintenance_equipment_user,maintenance.equipment,maintenance.model_maintenance_equipment,base.group_user,1,0,0,0

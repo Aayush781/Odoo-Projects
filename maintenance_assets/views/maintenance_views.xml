@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ===================== Menu Items ===================== -->
+    <record id="maintenance.menu_maintenance_title" model="ir.ui.menu">
+        <field name="name">Asset Management</field>
+    </record>
+    <record id="maintenance.menu_equipment_form" model="ir.ui.menu">
+        <field name="name">Assets</field>
+        <field name="action" ref="maintenance.hr_equipment_action"/>
+    </record>
+    <record id="maintenance.menu_maintenance_cat" model="ir.ui.menu">
+        <field name="name">Asset Categories</field>
+    </record>
+    <record id="maintenance.menu_maintenance_teams" model="ir.ui.menu">
+        <field name="name">Asset Teams</field>
+    </record>
+    <!-- ===================== Actions ===================== -->
+    <record id="maintenance.hr_equipment_category_action" model="ir.actions.act_window">
+        <field name="name">Asset Categories</field>
+    </record>
+    <record id="maintenance.hr_equipment_action" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" eval="False"/>
+    </record>
+    <record id="maintenance.hr_equipment_action_from_category_form" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+    </record>
+    <!-- ===================== Equipment Form View ===================== -->
+    <record id="hr_equipment_view_form_inherit" model="ir.ui.view">
+        <field name="name">equipment.form.inherit.assets</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="string">Assets</attribute>
+            </form>
+            <xpath expr="//sheet/*" position="before">
+                <field name="image_medium" widget="image" class="oe_avatar"
+                    options="{'preview_image': 'image_medium'}"/>
+            </xpath>
+            <field name="category_id" position="before">
+                <field name="asset_type_id"/>
+            </field>
+            <field name="category_id" position="attributes">
+                <attribute name="domain">[('asset_type_id', '=', asset_type_id)]</attribute>
+                <attribute name="invisible">not asset_type_id</attribute>
+                <attribute name="required">asset_type_id</attribute>
+            </field>
+            <field name="scrap_date" position="after">
+                <field name="location_id" invisible="1"/>
+                <field name="purchase_date"/>
+            </field>
+            <field name="maintenance_team_id" position="after">
+                <field name="maintenance_team_name" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='cost']" position="attributes">
+                <attribute name="groups">base.group_user</attribute>
+                <attribute name="invisible">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- ===================== Equipment List View ===================== -->
+    <record id="hr_equipment_view_tree_inherit" model="ir.ui.view">
+        <field name="name">equipment.list.inherit.assets</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_tree"/>
+        <field name="arch" type="xml">
+            <!-- Rename column header -->
+            <field name="name" position="attributes">
+                <attribute name="string">Asset Name</attribute>
+            </field>
+            <!-- Remove unused columns -->
+            <field name="serial_no" position="replace"/>
+            <field name="assign_date" position="replace"/>
+            <field name="technician_user_id" position="replace"/>
+            <field name="department_id" position="replace"/>
+            <field name="employee_id" position="replace"/>
+            <field name="company_id" position="replace"/>
+            <!-- Add new columns -->
+            <field name="name" position="after">
+                <field name="location_id"/>
+            </field>
+            <field name="category_id" position="before">
+                <field name="asset_type_id"/>
+            </field>
+            <field name="category_id" position="after">
+                <field name="purchase_date"/>
+                <field name="cost" optional="show"/>
+                <field name="serial_no" optional="show"/>
+            </field>
+        </field>
+    </record>
+    <!-- ===================== Asset Category Form View ===================== -->
+    <record id="hr_equipment_category_view_form_inherit" model="ir.ui.view">
+        <field name="name">equipment.category.form.inherit.asset.type</field>
+        <field name="model">maintenance.equipment.category</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_category_view_form"/>
+        <field name="arch" type="xml">
+            <field name="technician_user_id" position="before">
+                <field name="asset_type_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>
